@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Recipe;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -58,9 +59,7 @@ class RecipeController extends Controller
      */
     public function update(Request $request, Recipe $recipe)
     {
-        if ($request->user()->role !== 'admin' && $recipe->user_id !== $request->user()->id) {
-            abort(403, 'Unauthorized');
-        }
+        Gate::authorize('update', $recipe);
 
         // Validation
         $request->validate([
@@ -94,9 +93,7 @@ class RecipeController extends Controller
      */
     public function destroy(Request $request, Recipe $recipe)
     {
-        if ($request->user()->role !== 'admin' && $recipe->user_id !== $request->user()->id) {
-            abort(403, 'Unauthorized');
-        }
+        Gate::authorize('delete', $recipe);
 
         // Delete image if exists
         if ($recipe->image) {
