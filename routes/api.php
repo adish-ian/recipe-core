@@ -23,6 +23,11 @@ Route::middleware('auth:sanctum')->group(function () {
 // Public Recipe Routes
 Route::get('/recipes', [RecipeController::class, 'index']);
 Route::get('/recipes/{recipe}', [RecipeController::class, 'show']);
-
-// Search
 Route::get('/recipes/search/{keyword}', [RecipeController::class, 'search']);
+
+// Authenticated Recipe Routes (Require valid Sanctum token)
+Route::middleware('auth:sanctum')->group(function () {
+    Route::post('/recipes', [RecipeController::class, 'store']);
+    Route::put('/recipes/{recipe}', [RecipeController::class, 'update']);
+    Route::delete('/recipes/{recipe}', [RecipeController::class, 'destroy']);
+});
