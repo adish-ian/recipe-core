@@ -8,12 +8,12 @@ use Illuminate\Support\Facades\Route;
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 
-// Fetch authenticated user details
-Route::middleware('auth:sanctum')->get('/user', [AuthController::class, 'getUser']);
-
 // Protected Routes
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
+
+    // Fetch authenticated user details
+    Route::middleware('auth:sanctum')->get('/user', [AuthController::class, 'getUser']);
 
     Route::apiResource('recipes', RecipeController::class)->except(['index', 'show']);
 
