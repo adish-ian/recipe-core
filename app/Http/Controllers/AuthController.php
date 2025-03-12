@@ -8,6 +8,13 @@ use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
+    public function getUser(Request $request)
+    {
+        return response()->json([
+            'name' => $request->user()->name,
+        ]);
+    }
+
     public function register(Request $request)
     {
         $request->validate([

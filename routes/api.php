@@ -12,6 +12,9 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
 
+    // Fetch authenticated user details
+    Route::middleware('auth:sanctum')->get('/user', [AuthController::class, 'getUser']);
+
     Route::apiResource('recipes', RecipeController::class)->except(['index', 'show']);
 
     // Admin Routes
